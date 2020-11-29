@@ -7,7 +7,8 @@ Collaborators:  Amed B. Martin
 
 TODO: fix this better!
 Dependencies:
-    Python3: bs4, wget
+    Python3: bs4, wget, opencv-python, pytesseract, tesseract
+    System: tesseract
 
 
 
