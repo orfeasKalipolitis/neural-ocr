@@ -132,3 +132,4 @@ dmypy.json
 downloadedFonts/
 fonts/
 *.tmp
+images/
