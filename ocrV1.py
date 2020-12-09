@@ -69,6 +69,8 @@ ap.add_argument("-e", "--height", type=int, default=320,
 	help="nearest multiple of 32 for resized height")
 ap.add_argument("-p", "--padding", type=float, default=0.0,
 	help="amount of padding to add to each border of ROI")
+ap.add_argument("-l", "--lang", type=str, default="eng",
+	help="Lang code in iso639-2 for OCR. Example: ell, eng, swe, spa")
 args = vars(ap.parse_args())
 
 
@@ -138,7 +140,7 @@ for (startX, startY, endX, endY) in boxes:
 	# wish to use the LSTM neural net model for OCR, and finally
 	# (3) an OEM value, in this case, 7 which implies that we are
 	# treating the ROI as a single line of text
-	config = ("-l eng --oem 1 --psm 7")
+	config = ("-l " + args["lang"] + " --oem 1 --psm 7")
 	text = pytesseract.image_to_string(roi, config=config)
 	# add the bounding box coordinates and OCR'd text to the list
 	# of results
