@@ -56,7 +56,7 @@ def decode_predictions(scores, geometry):
 
 
 # construct the argument parser and parse the arguments
-ap = argparse.ArgumentParser()
+ap = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
 ap.add_argument("-i", "--image", type=str,
 	help="path to input image")
 ap.add_argument("-east", "--east", type=str,
@@ -71,6 +71,13 @@ ap.add_argument("-p", "--padding", type=float, default=0.0,
 	help="amount of padding to add to each border of ROI")
 ap.add_argument("-l", "--lang", type=str, default="eng",
 	help="Lang code in iso639-2 for OCR. Example: ell, eng, swe, spa")
+ap.add_argument("-psm", "--psm", type=int, default=7,
+	help=	"Page Segmentations Mode. Some you could experiment with:\n" +
+			"3:  Fully automatic page segmentation, but no OSD. \n" +
+			"4:  Assume a single column of text of variable sizes. \n" +
+			"7:  Treat the image as a single text line. (Default)\n" + 
+			"8:  Treat the image as a single word.\n" +
+			"10: Treat the image as a single character.")
 args = vars(ap.parse_args())
 
 
@@ -136,11 +143,14 @@ for (startX, startY, endX, endY) in boxes:
 
 
     # in order to apply Tesseract v4 to OCR text we must supply
-	# (1) a language, (2) an OEM flag of 4, indicating that the we
-	# wish to use the LSTM neural net model for OCR, and finally
-	# (3) an OEM value, in this case, 7 which implies that we are
-	# treating the ROI as a single line of text
-	config = ("-l " + args["lang"] + " --oem 1 --psm 7")
+	# (1) a language code in iso639-2, 
+	#
+	# (2) an OEM flag of 1, indicating that the we
+	# 	  wish to use the LSTM neural net model for OCR
+	#
+	# (3) a PSM value, in this case, 7 which implies that we are
+	#     treating the ROI as a single line of text
+	config = ("-l " + args["lang"] + " --oem 1 --psm " + str(args["psm"]))
 	text = pytesseract.image_to_string(roi, config=config)
 	# add the bounding box coordinates and OCR'd text to the list
 	# of results
