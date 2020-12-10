@@ -24,7 +24,7 @@ except FileExistsError:
 for i in range(1, 322, 1):
     url = 'https://www.1001fonts.com/handwritten-fonts.html?page=' + str(i)
     
-    # get response from google
+    # get response from 1001fonst
     try:
         now = time.time()
         if (now - lastCall) < wt:
@@ -46,6 +46,7 @@ for i in range(1, 322, 1):
     # use beautiful soup to process the results page
     web_soup = soup(response.text, 'html.parser')
 
+    # download the fonts from the links foudn on the page
     for dlLink in web_soup.find_all(class_='obtrusive'):
         url2download = 'https:' + dlLink['href']
         try:
