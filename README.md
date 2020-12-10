@@ -7,7 +7,10 @@ Collaborators:  Amed B. Martin
 
 
 Example usage:
-    python scraper.py - to download fonts from 1001fonts
+    python scraper.py
+        to download fonts from 1001fonts
+    python unstoppableUnzipper.py
+        to unzip all downloaded fonts in one go
     python ocrV1.py --help
         to get some help about the potential arguments
     python ocrV1.py --east frozen_east_text_detection.pb \
